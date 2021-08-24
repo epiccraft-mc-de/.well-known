@@ -1,13 +1,19 @@
 import { queryDns } from "./utils";
 import { ROOT_DOMAIN } from "./index";
+import {
+  ACCESS_CONTROL_ALLOW_ORIGIN,
+  APPLICATION_JSON,
+  ASTERISK,
+  CONTENT_TYPE,
+} from "./headers";
 
 export function matrixClient() {
   return new Response(
     `{"m.homeserver":{"base_url":"https://matrix.${ROOT_DOMAIN}"},"m.identity_server":{"base_url":"https://vector.im"}}`,
     {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        [CONTENT_TYPE]: APPLICATION_JSON,
+        [ACCESS_CONTROL_ALLOW_ORIGIN]: ASTERISK,
       },
     }
   );
@@ -18,8 +24,8 @@ export async function matrixServer() {
     `{"m.server":"matrix-federation.${ROOT_DOMAIN}:443"}` /*`{"m.server":"${await queryMatrixHost()}"}`*/,
     {
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        [CONTENT_TYPE]: APPLICATION_JSON,
+        [ACCESS_CONTROL_ALLOW_ORIGIN]: ASTERISK,
       },
     }
   );
