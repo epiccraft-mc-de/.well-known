@@ -12,7 +12,7 @@ const router = Router()
   .get("/.well-known/security.txt", redirectRootDomain, securityTxt)
   .get("/.well-known/matrix/client", onlyRootDomain, matrixClient)
   .get("/.well-known/matrix/server", onlyRootDomain, matrixServer)
-  .get("*", fetch);
+  .all("*", fetch);
 
 addEventListener("fetch", (event) => {
   event.respondWith(router.handle(event.request).catch(handleError));
