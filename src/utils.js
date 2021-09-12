@@ -5,12 +5,8 @@ export function redirectRootDomain(request) {
 
   if (url.hostname !== ROOT_DOMAIN) {
     url.hostname = ROOT_DOMAIN;
-    const urlString = url.toString();
 
-    return new Response(`<a href="${urlString}">${urlString}</a>`, {
-      status: 302,
-      headers: { Location: urlString },
-    });
+    return redirect(url.toString());
   }
 }
 
@@ -19,6 +15,16 @@ export function onlyRootDomain(request) {
 
   if (url.hostname !== ROOT_DOMAIN) {
     return fetch(request);
+  }
+}
+
+export function onlyDomain(request) {
+  const url = new URL(request.url);
+
+  if (!url.hostname.endsWith(ROOT_DOMAIN)) {
+    url.hostname = ROOT_DOMAIN;
+
+    return redirect(url);
   }
 }
 
@@ -34,5 +40,12 @@ export async function queryDns(name, type) {
 export function handleError(error) {
   return new Response(error.message || "Server Error", {
     status: error.status || 500,
+  });
+}
+
+export function redirect(url) {
+  new Response(`Redirecting to <a href="${url}">${url}</a>...`, {
+    status: 302,
+    headers: { Location: url },
   });
 }

@@ -1,7 +1,12 @@
 import { Router } from "itty-router";
-import { handleError, onlyRootDomain, redirectRootDomain } from "./utils";
-import { matrixClient, matrixServer } from "./matrix";
+import {
+  handleError,
+  onlyDomain,
+  onlyRootDomain,
+  redirectRootDomain,
+} from "./utils";
 import { robotsTxt, securityTxt } from "./other";
+import { matrixClient, matrixServer } from "./matrix";
 
 export const ROOT_DOMAIN = "m4rc3l.de";
 export const MATRIX_CLIENT = `https://matrix.${ROOT_DOMAIN}`;
@@ -12,7 +17,7 @@ const router = Router()
   .get("/.well-known/security.txt", redirectRootDomain, securityTxt)
   .get("/.well-known/matrix/client", onlyRootDomain, matrixClient)
   .get("/.well-known/matrix/server", onlyRootDomain, matrixServer)
-  .all("*", fetch);
+  .all("*", onlyDomain, fetch);
 
 addEventListener("fetch", (event) => {
   event.respondWith(router.handle(event.request).catch(handleError));
