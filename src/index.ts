@@ -1,11 +1,6 @@
 import { Router } from "itty-router";
-import {
-  handleError,
-  onlyDomain,
-  onlyRootDomain,
-  redirectRootDomain,
-} from "./utils";
 import { robotsTxt, securityTxt } from "./other";
+import { onlyDomain, onlyRootDomain, redirectRootDomain } from "./utils";
 import { matrixClient, matrixServer } from "./matrix";
 
 export const ROOT_DOMAIN = "m4rc3l.de";
@@ -28,5 +23,12 @@ const router = Router()
   .all("*", onlyDomain, fetch);
 
 addEventListener("fetch", (event) =>
-  event.respondWith(router.handle(event.request).catch(handleError))
+  event.respondWith(
+    router.handle(event.request).catch(
+      (error: { message?: string; status?: number }) =>
+        new Response(error.message || "Server Error", {
+          status: error.status || 500,
+        })
+    )
+  )
 );

@@ -1,5 +1,6 @@
 name = "well-known"
-type = "webpack"
+type = "javascript"
+compatibility_date = "2021-09-19"
 # *.m4rc3l.de
 routes = [
     "*m4rc3l.de/robots.txt",
@@ -13,3 +14,9 @@ routes = [
 zone_id = "b820a9fe742f410d3dfb40cc398c7577"
 account_id = "2a09613716e511a8fe8ca74abc084762"
 workers_dev = false
+
+[build]
+command = "npm run build"
+
+[build.upload]
+format = "service-worker"

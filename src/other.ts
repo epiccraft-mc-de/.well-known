@@ -6,7 +6,7 @@ import {
   TEXT_PLAIN,
 } from "./headers";
 
-export async function robotsTxt(request) {
+export async function robotsTxt(request: Request): Promise<Response> {
   const url = new URL(request.url);
 
   if (!REDIRECT_DOMAINS.includes(url.hostname)) {
@@ -25,7 +25,7 @@ export async function robotsTxt(request) {
   });
 }
 
-export function securityTxt() {
+export function securityTxt(): Response {
   return new Response(
     `Contact: mailto:security@${ROOT_DOMAIN}
 Expires: 2023-12-31T23:59:59.999Z
