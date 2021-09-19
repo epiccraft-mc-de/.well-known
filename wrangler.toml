@@ -3,7 +3,8 @@ type = "webpack"
 # *.m4rc3l.de
 routes = [
     "*m4rc3l.de/robots.txt",
-    "*m4rc3l.de/.well-known/*"
+    "*m4rc3l.de/.well-known/*",
+    "www.m4rc3l.de/*"
 ]
 
 # "*marcelcoding.ml/*",

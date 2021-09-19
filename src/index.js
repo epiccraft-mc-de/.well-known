@@ -12,13 +12,21 @@ export const ROOT_DOMAIN = "m4rc3l.de";
 export const MATRIX_CLIENT = `https://matrix.${ROOT_DOMAIN}`;
 export const MATRIX_FEDERATION = `matrix-federation-int.${ROOT_DOMAIN}:8539`;
 
+export const REDIRECT_DOMAINS = [
+  `www.${ROOT_DOMAIN}`,
+  "marcelcoding.ml",
+  "www.marcelcoding.ml",
+  "marcelcoding.tk",
+  "www.marcelcoding.tk",
+];
+
 const router = Router()
   .get("/robots.txt", robotsTxt)
   .get("/.well-known/security.txt", redirectRootDomain, securityTxt)
-  .get("/.well-known/matrix/client", onlyRootDomain, matrixClient)
-  .get("/.well-known/matrix/server", onlyRootDomain, matrixServer)
+  .get("/.well-known/matrix/client", onlyDomain, onlyRootDomain, matrixClient)
+  .get("/.well-known/matrix/server", onlyDomain, onlyRootDomain, matrixServer)
   .all("*", onlyDomain, fetch);
 
-addEventListener("fetch", (event) => {
-  event.respondWith(router.handle(event.request).catch(handleError));
-});
+addEventListener("fetch", (event) =>
+  event.respondWith(router.handle(event.request).catch(handleError))
+);

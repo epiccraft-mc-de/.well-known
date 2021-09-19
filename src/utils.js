@@ -1,4 +1,4 @@
-import { ROOT_DOMAIN } from "./index";
+import { REDIRECT_DOMAINS, ROOT_DOMAIN } from "./index";
 
 export function redirectRootDomain(request) {
   const url = new URL(request.url);
@@ -21,10 +21,16 @@ export function onlyRootDomain(request) {
 export function onlyDomain(request) {
   const url = new URL(request.url);
 
-  if (!url.hostname.endsWith(ROOT_DOMAIN)) {
+  console.log(
+    REDIRECT_DOMAINS.includes(url.hostname),
+    url.hostname,
+    REDIRECT_DOMAINS
+  );
+
+  if (REDIRECT_DOMAINS.includes(url.hostname)) {
     url.hostname = ROOT_DOMAIN;
 
-    return redirect(url);
+    return redirect(url.toString());
   }
 }
 
@@ -44,7 +50,7 @@ export function handleError(error) {
 }
 
 export function redirect(url) {
-  new Response(`Redirecting to <a href="${url}">${url}</a>...`, {
+  return new Response(`Redirecting to <a href="${url}">${url}</a>...`, {
     status: 302,
     headers: { Location: url },
   });

@@ -1,4 +1,4 @@
-import { ROOT_DOMAIN } from "./index";
+import { REDIRECT_DOMAINS, ROOT_DOMAIN } from "./index";
 import {
   ACCESS_CONTROL_ALLOW_ORIGIN,
   ASTERISK,
@@ -7,10 +7,14 @@ import {
 } from "./headers";
 
 export async function robotsTxt(request) {
-  let orgRobots = await fetch(request);
+  const url = new URL(request.url);
 
-  if (orgRobots.status !== 404) {
-    return orgRobots;
+  if (!REDIRECT_DOMAINS.includes(url.hostname)) {
+    const orgRobots = await fetch(request);
+
+    if (orgRobots.status !== 404) {
+      return orgRobots;
+    }
   }
 
   return new Response(`User-agent: *\nDisallow: /`, {
