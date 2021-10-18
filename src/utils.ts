@@ -45,7 +45,7 @@ export async function queryDns(
     { headers: { Accept: "application/dns-json" } }
   );
 
-  return (await response.json()).Answer;
+  return (await response.json<{Answer: ({ data: string } & object)[]}>()).Answer;
 }
 
 export function redirect(url: string): Response {
