@@ -8,6 +8,7 @@ export const MATRIX_CLIENT = `https://matrix.${ROOT_DOMAIN}`;
 export const MATRIX_FEDERATION = `matrix.${ROOT_DOMAIN}:443`;
 
 export const REDIRECT_DOMAINS = [
+  "abc"
 ];
 
 const router = Router()
