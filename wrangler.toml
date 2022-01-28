@@ -1,18 +1,17 @@
-name = "well-known"
+name = "admin-guide-well-known"
 type = "javascript"
 compatibility_date = "2021-09-19"
 # *.m4rc3l.de
 routes = [
-    "*m4rc3l.de/robots.txt",
-    "*m4rc3l.de/.well-known/*",
-    "www.m4rc3l.de/*"
+    "*admin-guide.com/robots.txt",
+    "*admin-guide.com/.well-known/*",
 ]
 
 # "*marcelcoding.ml/*",
 # "*marcelcoding.tk/*"
 
-zone_id = "b820a9fe742f410d3dfb40cc398c7577"
-account_id = "2a09613716e511a8fe8ca74abc084762"
+zone_id = "e3324be77d2436591519504218987ad1"
+account_id = "29eab29860ff590680efdf01e8c17e45"
 workers_dev = false
 
 [build]
