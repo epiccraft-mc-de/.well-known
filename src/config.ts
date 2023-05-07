@@ -1,4 +1,4 @@
-export const ROOT_DOMAIN = "epiccraft-mc.de.de";
+export const ROOT_DOMAIN = "epiccraft-mc.de";
 export const MATRIX_CLIENT = `https://matrix.${ROOT_DOMAIN}`;
 export const MATRIX_FEDERATION = `matrix.${ROOT_DOMAIN}:443`;
 
