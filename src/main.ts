@@ -1,24 +1,16 @@
-import { Router } from "itty-router";
-import { robotsTxt, securityTxt } from "./other";
-import { onlyDomain, onlyRootDomain, redirectRootDomain } from "./utils";
-import { matrixClient, matrixServer } from "./matrix";
-
-export const ROOT_DOMAIN = "epiccraft-mc.de";
-export const MATRIX_CLIENT = `https://matrix.${ROOT_DOMAIN}`;
-export const MATRIX_FEDERATION = `matrix.${ROOT_DOMAIN}:443`;
-
-export const REDIRECT_DOMAINS = [
-  "abc"
-];
+import {Router} from "itty-router";
+import {robotsTxt, securityTxt} from "./other";
+import {onlyDomain, onlyRootDomain, redirectRootDomain} from "./utils";
+import {matrixClient, matrixServer} from "./matrix";
 
 const router = Router()
-  .get("/robots.txt", robotsTxt)
+  .get("/robots.txt", robotsTxt, redirectRootDomain)
   .get("/.well-known/security.txt", redirectRootDomain, securityTxt)
   .get("/.well-known/matrix/client", onlyDomain, onlyRootDomain, matrixClient)
   .get("/.well-known/matrix/server", onlyDomain, onlyRootDomain, matrixServer)
   .all("*", onlyDomain, fetch);
 
-addEventListener("fetch", (event) =>
+addEventListener("fetch", (event: FetchEvent) =>
   event.respondWith(
     router.handle(event.request).catch(
       (error: { message?: string; status?: number }) =>
